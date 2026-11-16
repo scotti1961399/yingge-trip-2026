@@ -97,7 +97,7 @@
   .recommend{margin-top:12px;padding:16px 15px;border-radius:14px}
   .recommend strong{font-size:15px;line-height:1.55}
   .recommend p{font-size:14px;line-height:1.7}
-  .tabbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:15px}
+  .tabbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:15px}
   .tabbar button{min-height:47px;padding:10px 4px;border-radius:13px;font-size:14px;white-space:nowrap}
   .group-note{padding:13px 14px;font-size:13px;line-height:1.7;border-radius:13px}
   .food-group-head h3{font-size:16px}
@@ -266,7 +266,7 @@ body.js-ready .app-view.is-active{animation:fadeIn .23s ease both}
  .app-view .food-card .addr{font-size:12px;margin:0 0 5px}
  .app-view .food-card p{font-size:13px;line-height:1.6;margin-bottom:8px}
  .app-view .food-card a{min-height:36px;align-items:center;font-size:13px}
- .app-view .tabbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .app-view .tabbar{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
  .app-view .tabbar button{padding:12px 5px;border-radius:14px;font-size:14px;min-height:46px}
  .group-note{font-size:12px;line-height:1.6;padding:10px 12px;margin-bottom:12px}
  .food-group+.food-group{margin-top:12px}
@@ -319,6 +319,19 @@ body.js-ready .app-view.is-active{animation:fadeIn .23s ease both}
 @media(max-width:768px){.app-view .food-card-summary{padding:13px 12px}.app-view .food-card-summary .food-title{font-size:16px}.app-view .food-grid{gap:9px}.app-view .night-plan-header p{display:none}}
 
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* 11/28 refinement: dinner is revealed only after selecting evening A */
+.night-placeholder{margin:16px 1px 0;padding:11px 0;color:var(--muted);font-size:14px;line-height:1.65;text-align:center}
+.night-subtabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:18px 0 16px}
+.night-subtabs button{background:#f4f4ec;color:#68796b;border:1px solid #dfe6dd;border-radius:13px;min-height:49px;padding:11px 12px;cursor:pointer;font-weight:800;font-size:14px}
+.night-subtabs button[aria-selected="true"]{background:#526b57;color:white;border-color:#526b57}
+.night-subpanel{margin:0!important;padding:0!important;border:0!important}
+.night-subpanel[hidden]{display:none!important}
+.night-subpanel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 12px}
+.night-subpanel-head h4{font-size:16px;margin:0}
+.night-subpanel-head p{font-size:12px;color:#778477;margin:0;line-height:1.6}
+.night-subpanel .night-venue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media(max-width:768px){.night-subtabs{margin:13px 0 15px;gap:8px}.night-subtabs button{font-size:14px;min-height:46px}.night-subpanel .night-venue-grid{grid-template-columns:1fr;gap:9px}.night-subpanel-head{gap:4px}.night-subpanel-head p{font-size:12px}}
 </style>
 </head>
 <body>
@@ -366,27 +379,32 @@ body.js-ready .app-view.is-active{animation:fadeIn .23s ease both}
 <div aria-live="polite" class="recommend"><strong id="arrival-title-dyn">可以慢慢逛，也能留時間吃甜點</strong><p id="arrival-copy">先去喝茶天、燧人炊事詢問現場候位（兩間在同一棟樓），可接受等待就登記並逛附近；若等太久再用備案。14:40 前抵達教室。</p></div>
 </div>
 </details></section></div><div aria-label="吃喝" class="app-view" data-view-panel="food" id="view-food"><section aria-labelledby="food-title" class="section anchor" id="food">
-<div class="section-head"><div><div class="eyebrow">SOMETHING DELICIOUS</div><h2 id="food-title">沿路遇到的好味道</h2></div><p class="hint">先試原本想吃、但沒有訂到位子的兩間店。<strong>等得合理就候位，太久才啟動備案。</strong></p></div>
-<div aria-label="餐飲分類" class="tabbar" role="tablist"><button aria-selected="true" data-tab="lunch" role="tab" type="button">🍚 午餐</button><button aria-selected="false" data-tab="dessert" role="tab" type="button">🍰 甜點</button><button aria-selected="false" data-tab="dinner" role="tab" type="button">🍽️ 晚餐</button></div>
+<div class="section-head"><div><div class="eyebrow">SOMETHING DELICIOUS</div><h2 id="food-title">沿路遇到的好味道</h2></div><p class="hint">中午先詢問原本想吃的兩間店，等得合理就候位，太久才啟動備案。<strong>晚餐放在「晚上」分頁的 A 方案裡。</strong></p></div>
+<div aria-label="餐飲分類" class="tabbar" role="tablist"><button aria-selected="true" data-tab="lunch" role="tab" type="button">🍚 午餐</button><button aria-selected="false" data-tab="dessert" role="tab" type="button">🍰 甜點</button></div>
 <div aria-live="polite" id="food-cards"></div>
 <p style="font-size:12px;line-height:1.8;color:#8a9188;margin:14px 4px 0">喝茶天、燧人炊事目前都未訂到午餐座位；現場是否收候位、可否登記後離開、等待時間，皆以當天店家告知為準。其餘餐廳與甜點亦未預訂。</p>
 </section></div><div aria-label="晚上" class="app-view" data-view-panel="evening" id="view-evening"><section aria-labelledby="evening-title" class="section anchor" id="evening">
-<div class="section-head"><div><div class="eyebrow">AFTER SUNSET</div><h2 id="evening-title">晚上，想去哪裡？</h2></div><p class="hint">不用現在做最後決定。<strong>三種安排都保留</strong>，看完光影，再依心情選一個。</p></div>
+<div class="section-head"><div><div class="eyebrow">AFTER SUNSET</div><h2 id="evening-title">晚上，想去哪裡？</h2></div><p class="hint">不用現在做最後決定。<strong>選擇 A 才會看到晚餐與甜點的小分頁</strong>，也能隨時改選 B 或 C。</p></div>
 <div aria-label="晚間方案" class="night-grid" role="group">
-<button aria-pressed="true" class="night-card" data-night="a" type="button"><div class="letter">A.</div><h3>留在鶯歌</h3><p>再吃一頓喜歡的晚餐，或乾脆只吃甜點。自在休息、慢慢聊天。</p><small>適合：還想坐一會兒 🍝</small></button>
+<button aria-pressed="false" class="night-card" data-night="a" type="button"><div class="letter">A.</div><h3>留在鶯歌</h3><p>再吃一頓喜歡的晚餐，或乾脆只吃甜點。自在休息、慢慢聊天。</p><small>適合：還想坐一會兒 🍝</small></button>
 <button aria-pressed="false" class="night-card" data-night="b" type="button"><div class="letter">B.</div><h3>去新店走走</h3><p>開車到裕隆城，逛誠品、挑甜點或晚餐，也能避開戶外的風雨。</p><small>適合：還有精神想逛 🛍️</small></button>
 <button aria-pressed="false" class="night-card" data-night="c" type="button"><div class="letter">C.</div><h3>直接回蘇澳</h3><p>已經玩得很充實，就一起返程。餓了再沿路找個方便的地方停。</p><small>適合：想早點休息 🌙</small></button>
 </div>
-<div aria-live="polite" class="night-detail"><div><strong id="night-dyn-title">A｜鶯歌的晚餐或甜點</strong><p id="night-dyn-copy">看完光影後，再依食慾決定吃正餐或甜點；下面已整理四間店的實際位置、營業與停車資訊。</p></div><div class="btns"><a class="btn primary" href="#night-a-plan" id="night-nav" rel="noopener noreferrer" target="_self">查看 A 方案店家 ↓</a><button class="btn" id="copy-night" type="button">複製這個選擇</button></div></div>
-<div aria-labelledby="night-a-heading" class="night-plan" id="night-a-plan" role="region">
+<p class="night-placeholder" id="night-placeholder">選擇 A、B 或 C，才會看到對應的晚間安排。</p>
+<div aria-live="polite" class="night-detail" id="night-detail" hidden><div><strong id="night-dyn-title">A｜鶯歌的晚餐或甜點</strong><p id="night-dyn-copy">看完光影後，再依食慾決定吃正餐或甜點；下面已整理四間店的實際位置、營業與停車資訊。</p></div><div class="btns"><a class="btn primary" href="#night-a-plan" id="night-nav" rel="noopener noreferrer" target="_self">查看 A 方案店家 ↓</a><button class="btn" id="copy-night" type="button">複製這個選擇</button></div></div>
+<div aria-labelledby="night-a-heading" class="night-plan" id="night-a-plan" role="region" hidden>
 <div class="night-plan-header">
 <div>
 <span class="pill clay">A 方案 · 已準備的店家</span>
-<h3 id="night-a-heading">留在鶯歌，晚餐或甜點都可以</h3>
+<h3 id="night-a-heading">留在鶯歌，想吃晚餐還是甜點？</h3>
 <p>從美術館看完光影後再決定，不必重新搭捷運回老街。想吃正餐就取車前往；如果只想吃甜點，也有車站附近可以順路買的選擇。</p>
 </div>
 </div>
-<details class="night-plan-section night-drawer"><summary><h4>🍽️ 想吃一頓舒服的晚餐</h4><p>兩間都是候選，不必現在決定或先訂位</p></summary><div class="night-venue-grid">
+<div class="night-subtabs" role="tablist" aria-label="A 方案餐飲選擇">
+<button type="button" role="tab" id="night-a-tab-dinner" data-night-subtab="dinner" aria-selected="true" aria-controls="night-a-dinner">🍽️ 晚餐</button>
+<button type="button" role="tab" id="night-a-tab-dessert" data-night-subtab="dessert" aria-selected="false" aria-controls="night-a-dessert">🍰 甜點</button>
+</div>
+<section class="night-plan-section night-subpanel" id="night-a-dinner" data-night-subpanel="dinner" role="tabpanel" aria-labelledby="night-a-tab-dinner"><div class="night-subpanel-head"><h4>🍽️ 想吃一頓舒服的晚餐</h4><p>兩間都是候選，不必現在決定或先訂位</p></div><div class="night-venue-grid">
 <details class="night-venue"><summary><div class="venue-tag">A1 · 停車比較省事</div><h5>TINA 廚房｜鶯歌尖山店</h5><p class="venue-address">新北市鶯歌區尖山路 5 號之 1</p></summary><div class="venue-body">
 
 
@@ -409,8 +427,8 @@ body.js-ready .app-view.is-active{animation:fadeIn .23s ease both}
 <a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%B6%AF%E6%AD%8C%E8%80%81%E8%A1%97%E7%AC%AC%E4%BA%8C%E5%B9%B3%E9%9D%A2%E5%81%9C%E8%BB%8A%E5%A0%B4" rel="noopener noreferrer" target="_blank">附近停車 ↗</a>
 </div>
 </div></details>
-</div></details>
-<details class="night-plan-section night-drawer"><summary><h4>🍰 不太餓？只吃甜點也可以</h4><p>選一間就好，不用特地再跑兩個地方</p></summary><div class="night-venue-grid">
+</div></section>
+<section class="night-plan-section night-subpanel" id="night-a-dessert" data-night-subpanel="dessert" role="tabpanel" aria-labelledby="night-a-tab-dessert" hidden><div class="night-subpanel-head"><h4>🍰 不太餓？只吃甜點也可以</h4><p>選一間就好，不用特地再跑兩個地方</p></div><div class="night-venue-grid">
 <details class="night-venue"><summary><div class="venue-tag">A3 · 車站周邊順路買</div><h5>局外人 Outsiders 甜點專賣</h5><p class="venue-address">臺鐵鶯歌車站 2 樓商店街</p></summary><div class="venue-body">
 
 
@@ -427,7 +445,7 @@ body.js-ready .app-view.is-active{animation:fadeIn .23s ease both}
 <div class="venue-facts"><span>🕙 週六一般 14:00–22:00</span><span>🅿️ 需另外找附近合法車位</span></div>
 <div class="venue-links"><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%96%B0%E4%B8%89%E7%BE%8E%E5%82%B3%E7%B5%B1%E7%94%9C%E5%93%81%20%E9%B6%AF%E6%AD%8C" rel="noopener noreferrer" target="_blank">地圖導航 ↗</a></div>
 </div></details>
-</div></details>
+</div></section>
 <div class="night-plan-note"><strong>當天怎麼選：</strong>想吃飽就先看 TINA／艾麋的現場候位；只想吃一點甜食就看局外人／新三美。若都需要久等、停車不方便，隨時改選 B（新店裕隆城）或 C（直接回蘇澳）。以上尚未預約，營業與供餐依 11/28 店家公告。</div>
 </div>
 </section></div><div aria-label="交通" class="app-view" data-view-panel="travel" id="view-travel"><section aria-label="停車與交通資訊" class="section anchor" id="travel"><div class="section-head"><div><div class="eyebrow">A LITTLE PRACTICAL NOTE</div><h2>交通，簡單就好</h2></div></div><div class="journey transport-grid"><div><span class="pill ghost">停車首選</span><h3 style="font-size:17px;margin:10px 0 6px">新北市美術館地下停車場</h3><p style="font-size:13px;color:#7a877c;line-height:1.9;margin:0">館前路 298 號 B2、B3。停一次車，來回搭三鶯線，晚上再從這裡決定下一站。</p><a class="text-link" href="https://www.google.com/maps/search/?api=1&amp;query=%E6%96%B0%E5%8C%97%E5%B8%82%E7%BE%8E%E8%A1%93%E9%A4%A8%E5%9C%B0%E4%B8%8B%E5%81%9C%E8%BB%8A%E5%A0%B4" rel="noopener noreferrer" target="_blank">停車場導航</a></div><div><span class="pill ghost">搭一站捷運</span><h3 style="font-size:17px;margin:10px 0 6px">LB08 ↔ LB09</h3><p style="font-size:13px;color:#7a877c;line-height:1.9;margin:0">美術館旁的鶯歌車站，搭到陶瓷老街站。一起散步不用急，班次仍以當天站內資訊為準。</p><a class="text-link" href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B8%89%E9%B6%AF%E7%B7%9A%20LB08%20%E9%B6%AF%E6%AD%8C%E8%BB%8A%E7%AB%99" rel="noopener noreferrer" target="_blank">捷運站位置</a></div></div></section><section aria-labelledby="weather-title" class="section anchor" id="weather"><div class="section-head"><div><div class="eyebrow">RAIN OR SHINE</div><h2 id="weather-title">晴天雨天，都有玩法</h2></div></div><div class="weather"><div aria-hidden="true" class="weather-icon">☂️</div><div><h3>如果下雨，就把步調放慢一點</h3><p>陶藝課照常為主；美術館戶外光影視現場活動與天氣決定是否觀看。可以提早找室內餐廳休息，或選擇新店裕隆城。不需要為了完成行程而淋雨。</p></div></div></section></div><footer class="footer"><div><span class="foot-brand">Enjoy the little things.</span><div>11.28 · YINGGE DAY TRIP</div></div><div>這是一份可以隨時改變主意的小旅行指南。<br/>資料為出發前整理；活動、營業與路況以當日官方資訊為準。<br/>切換選擇僅影響此裝置的瀏覽器，不會自動跨手機同步。</div></footer></div>
@@ -446,11 +464,7 @@ lunch:[
 dessert:[
  {icon:'🍮',tag:'傳統甜品・尖山埔路',name:'阿嬤ㄟ豆花',desc:'簡單、甜甜的在地滋味；有時間就買份豆花，不必排太久。',q:'阿嬤ㄟ豆花 鶯歌'},
  {icon:'🥐',tag:'烘焙點心・育英街',name:'ESUWA',desc:'肉桂捲與烘焙點心，以外帶為主，熱門品項可能售完。',q:'ESUWA 肉桂捲 鶯歌'},
- {icon:'🍰',tag:'咖啡甜點・光點美學館',name:'Eunice Cafe',desc:'想坐下來喝咖啡、分享蛋糕時的選擇，先確認當天座位。',q:'Eunice Cafe 鶯歌 光點美學館'}],
-dinner:[
- {icon:'🍽️',tag:'正餐與甜點・尖山路',name:'TINA 廚房',desc:'有正餐、麵包與甜點，適合看完光影後取車直接前往；要注意最後點餐時間。',q:'TINA廚房 鶯歌尖山店'},
- {icon:'🍝',tag:'義式料理・尖山路',name:'艾麋 Bistro',desc:'義大利麵、燉飯與甜點；如果想坐下來聊天，可以先看看候位。',q:'艾麋 Bistro 鶯歌'},
- {icon:'🍧',tag:'傳統甜湯・鶯歌市區',name:'新三美甜品',desc:'不餓也沒關係，找一碗熱甜湯或豆花，吃完就能輕鬆回程。',q:'新三美傳統甜品 鶯歌'}]
+ {icon:'🍰',tag:'咖啡甜點・光點美學館',name:'Eunice Cafe',desc:'想坐下來喝咖啡、分享蛋糕時的選擇，先確認當天座位。',q:'Eunice Cafe 鶯歌 光點美學館'}]
 };
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const renderCard=(x,tab)=>`<details class="food-card"><summary class="food-card-summary"><span class="food-art ${tab==='dessert'?'sweet':tab==='dinner'?'dinner':''}" aria-hidden="true">${x.icon}</span><span class="food-card-inner"><span class="label ${x.tier==='primary'?'priority':''}">${esc(x.tag)}</span><span class="food-title">${esc(x.name)}</span>${x.address?`<span class="addr">${esc(x.address)}</span>`:''}</span><span class="food-expand" aria-hidden="true">＋</span></summary><div class="food-card-extra"><p>${esc(x.desc)}</p><a href="${find(x.q)}" target="_blank" rel="noopener noreferrer" aria-label="在地圖尋找 ${esc(x.name)}">地圖與導航 ↗</a></div></details>`;
@@ -471,10 +485,30 @@ const nights={
  b:{title:'B｜新店裕隆城，繼續走走',copy:'還有精神就開車往新店，在誠品、餐廳和甜點間慢慢挑。室內也適合雨天；逛累就直接返程。',url:find('新店裕隆城 中興路三段70號'),label:'導航裕隆城 ↗'},
  c:{title:'C｜直接回蘇澳',copy:'如果想早點休息，就從美術館取車返程。途中有需要再休息或買吃的，不用硬排最後一站。',url:'https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent('新北市鶯歌區館前路298號')+'&destination='+encodeURIComponent('宜蘭縣蘇澳鎮')+'&travelmode=driving',label:'查看返程 ↗'}
 };
-let selected='a';function setNight(key){selected=key;document.querySelectorAll('[data-night]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.night===key)));document.getElementById('night-dyn-title').textContent=nights[key].title;document.getElementById('night-dyn-copy').textContent=nights[key].copy;const link=document.getElementById('night-nav');link.href=nights[key].url;link.textContent=nights[key].label;link.target=key==='a'?'_self':'_blank';document.getElementById('night-a-plan').hidden=key!=='a';try{localStorage.setItem('yingge.night',key)}catch{}}
+let selected=null;
+function setNightSubTab(tab){
+ if(!['dinner','dessert'].includes(tab))tab='dinner';
+ document.querySelectorAll('[data-night-subtab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.nightSubtab===tab)));
+ document.querySelectorAll('[data-night-subpanel]').forEach(el=>{el.hidden=el.dataset.nightSubpanel!==tab});
+}
+for(const b of document.querySelectorAll('[data-night-subtab]'))b.addEventListener('click',()=>setNightSubTab(b.dataset.nightSubtab));
+setNightSubTab('dinner');
+function setNight(key){
+ if(!nights[key])return;
+ selected=key;
+ document.querySelectorAll('[data-night]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.night===key)));
+ document.getElementById('night-placeholder').hidden=true;
+ document.getElementById('night-detail').hidden=key==='a';
+ document.getElementById('night-dyn-title').textContent=nights[key].title;
+ document.getElementById('night-dyn-copy').textContent=nights[key].copy;
+ const link=document.getElementById('night-nav');
+ link.href=nights[key].url;link.textContent=nights[key].label;link.target=key==='a'?'_self':'_blank';
+ document.getElementById('night-a-plan').hidden=key!=='a';
+ if(key==='a')setNightSubTab('dinner');
+}
 for(const b of document.querySelectorAll('[data-night]'))b.addEventListener('click',()=>setNight(b.dataset.night));
 function load(k,allowed,fallback){try{const v=localStorage.getItem(k);return allowed.includes(v)?v:fallback}catch{return fallback}}
-setArrival(load('yingge.arrival',Object.keys(arrPlans),'early'));setNight(load('yingge.night',Object.keys(nights),'a'));
+setArrival(load('yingge.arrival',Object.keys(arrPlans),'early'));
 document.getElementById('copy-night').addEventListener('click',async()=>{const value='11/28 鶯歌小旅行｜'+nights[selected].title+'\n'+nights[selected].copy;const btn=document.getElementById('copy-night');try{await navigator.clipboard.writeText(value);btn.textContent='已複製 ✓';setTimeout(()=>btn.textContent='複製這個選擇',1800)}catch{prompt('複製這段文字：',value)}});
 
 // Genuine tabbed navigation. All screens remain available in no-JS fallback.
@@ -492,10 +526,10 @@ function showView(name, writeHash){
 }
 viewLinks.forEach(a=>a.addEventListener('click',ev=>{ev.preventDefault();showView(a.dataset.viewLink,true)}));
 window.addEventListener('hashchange',()=>showView(screenName(),false));
-// Fallback link inside A plan still scrolls locally, no cross-view jump.
+// Scroll directly to the A-only restaurant/ dessert sub-tabs.
 const nightNav=document.getElementById('night-nav');
 nightNav.addEventListener('click',event=>{
- if(selected==='a'){event.preventDefault();const area=document.getElementById('night-a-plan');area.querySelector('.night-drawer').open=true;area.scrollIntoView({behavior:'smooth',block:'start'});}
+ if(selected==='a'){event.preventDefault();document.getElementById('night-a-plan').scrollIntoView({behavior:'smooth',block:'start'});}
 });
 showView(screenName(),false);
 
